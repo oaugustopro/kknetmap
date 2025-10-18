@@ -1,0 +1,192 @@
+* KKNETMAP
+
+*KKNETMAP*  is an interactive network visualization tool built with Flask and D3.js, designed to map and analyze network scan data (from Nmap's greppable output). It provides a dynamic graph interface with a timeline, customizable filters, and event tracking for hosts and ports.
+
+![](ksnip_20251017-225031.png)
+![](ksnip_20251017-225253.png)
+
+** Features
+
+- *Graph Visualization* :
+  
+  - Displays hosts and their open ports as nodes, with built-in and custom links.
+    
+  - Persistent node positions, zoom, and pan settings saved across sessions.
+    
+  - Customizable node colors and border styles, with right-click to toggle borders.
+    
+  - Pinned emojis for hosts with search-by-name functionality.
+    
+  - Custom links with styles (straight, curved, dashed), colors, labels, and notes.
+    
+  - Double-click a node to start a custom link; press Esc to cancel.
+    
+- *Timeline* :
+  
+  - Visualizes events for hosts and ports with adaptive time axis (months, days, hours, or minutes based on zoom/span).
+    
+  - Events include name, tag, emoji, color, timestamp, and notes.
+    
+  - Flexible datetime input: full datetime, date only (sets 00:00:00), time only (sets today), or empty (sets now).
+    
+  - Events are non-overlapping with vertical stems anchored to the center, placed behind nodes.
+    
+  - Drag events vertically (x-axis locked to time); stems follow and snap back smoothly.
+    
+  - Clicking an event highlights the corresponding node in the graph with a halo effect.
+    
+  - Persistent timeline zoom and resizable height via a top handle.
+    
+- *Filters* :
+  
+  - Collapsible filter panel with persistent state.
+    
+  - Allow/Deny filters for pinned emojis, regex patterns, and names (host IP/name or port number/service).
+    
+  - Rules:
+    
+    - Host matches (name/regex) make the host and all its ports visible.
+      
+    - Port matches show only that port if the host is visible.
+      
+    - Deny on a host hides the host and its ports; deny on a port hides only the port.
+      
+- *Sidebar* :
+  
+  - Displays and edits details for selected nodes (hosts/ports) or links.
+    
+  - Supports notes, color customization, and pinned emojis for hosts.
+    
+  - Event management with a flexible datetime editor and mini-editor for timestamps.
+    
+- *Instructions Panel* :
+  
+  - Markdown-based panel in the bottom-left corner for custom notes/legends.
+    
+  - Live preview and persistent storage.
+    
+- *Branding* :
+  
+  - "KKNETMAP by kktools" displayed at the top, with color and font changing every 5 minutes.
+    
+
+** Requirements
+
+- Python 3.6+
+  
+- Flask (pip install flask)
+  
+- Nmap (for generating hosts.txt in greppable format)
+  
+
+** Installation
+
+1. Clone the repository:
+
+  #+begin_src c
+  git clone https://github.com/yourusername/kknetmap.git
+  cd kknetmap
+  #+end_src
+  
+2. Install dependencies:
+
+  
+  #+begin_src c
+  pip install flask
+  #+end_src
+  
+3. Prepare the hosts.txt file:
+  
+  - Run an Nmap scan with greppable output (\-oG):
+    
+
+    
+    #+begin_src c
+    nmap -oG hosts.txt <your-target>
+    #+end_src
+    
+  - Place hosts.txt in the project root.
+    
+4. Run the application:
+  
+   #+begin_src c
+  python kknetmap.py --port 5000
+  #+end_src
+  
+  Replace 5000 with your desired port if needed.
+  
+5. Open your browser and navigate to http://localhost:5000.
+  
+
+** Usage
+
+- *Graph Interaction* :
+  
+  - Click a node to view/edit details in the sidebar.
+    
+  - Right-click a node to toggle its border.
+    
+  - Double-click a node to start drawing a custom link; click another node to complete it or press Esc to cancel.
+    
+  - Drag nodes to reposition; positions are saved automatically.
+    
+  - Use the mouse wheel or pinch to zoom/pan the graph.
+    
+- *Timeline* :
+  
+  - Add events to hosts/ports via the sidebar.
+    
+  - Click an event’s timestamp to edit it with a mini date/time picker.
+    
+  - Drag events vertically for temporary repositioning (snaps back to anchor).
+    
+  - Use filters (regex, emoji, host, date range) to narrow down events.
+    
+- *Filters* :
+  
+  - Add allow/deny rules for emojis, regex, or names in the filter panel.
+    
+  - Collapse/expand the panel with the toggle button or double-click the header.
+    
+- *Instructions* :
+  
+  - Click the ✎ button to open the Markdown panel.
+    
+  - Write notes in Markdown; preview updates live.
+    
+  - Save to persist instructions across sessions.
+    
+
+** Data Files
+
+- *hosts.txt* : Nmap greppable output with host and port information.
+  
+- *data.txt* : Stores persistent state (node positions, zoom, events, links, instructions).
+  
+
+** Example hosts.txt
+
+
+#+begin_src c
+Host: 192.168.1.1 (gateway.local) Ports: 80/open/tcp//http, 443/open/tcp//https
+Host: 192.168.1.10 (server.local) Ports: 22/open/tcp//ssh, 3306/open/tcp//mysql
+#+end_src
+
+** Dependencies (Frontend)
+
+- D3.js (v7) for graph and timeline rendering.
+  
+- Marked for Markdown parsing.
+  
+
+** License
+
+MIT License. See LICENSE for details.
+
+** Contributing
+
+Contributions are welcome! Please submit a pull request or open an issue for bugs, features, or improvements.
+
+** Author
+
+Developed by [kktools].
