@@ -2,8 +2,9 @@
 
 *KKNETMAP*  is an interactive network visualization tool built with Flask and D3.js, designed to map and analyze network scan data (from Nmap's greppable output). It provides a dynamic graph interface with a timeline, customizable filters, and event tracking for hosts and ports.
 
-![](ksnip_20251017-225031.png)
-![](ksnip_20251017-225253.png)
+ksnip_20251017-225031.png
+
+ksnip_20251017-225253.png
 
 ** Features
 
